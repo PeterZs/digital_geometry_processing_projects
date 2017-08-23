@@ -1,0 +1,9 @@
+
+This is a very much incomplete list of possible Mesh Viewer improvements:
+
+ - cmake support
+ - saving of viewpoints (for example in VRML97 files)
+ - better Web3D/VRML97 support (e.g. "def" and "use" support)
+ - making it more configurable
+ - supporting more 3D file formats (X3D, PLY binary format, Quake player models etc.)
+

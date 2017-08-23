@@ -1,0 +1,65 @@
+***************************** Minimal Mview  ********************************
+
+Shayan Hoshyari, Student #: 81382153
+Assignment 3, Digital Geometry Processing
+
+--------------------  Implemented functionality:
+
+-> Load a .off or .obj mesh.
+-> Select up to 7 group of anchor vertices.
+-> Rotation of each anchor group seperately.
+-> Translation of each anchor group seperately.
+-> Implemented method: ARAP with weak constraints for the anchor vertices.
+-> Solver: PETSc (https://www.mcs.anl.gov/petsc/)
+           Supports Cholesky, LU, GMRES, BCGSTAB and CG
+	   (preconditioned with ILU(k), or incomplete Cholesky)
+-> Dense Matrix Library: Armadillo (http://arma.sourceforge.net/)	   
+
+-------------------- How to use the code:
+
+Modify the makefile and run (PETSc and Armadillo must be installed):
+$ make GLUT
+
+To run the code:
+$ ./mview <mesh_file_address> [options]
+
+Where options can be any Petsc options, e.g.:
+-ksp_type (cholesky, lu, ...)
+
+And the following options for the ARAP class:
+-arap_v (0, 1, or 2) verbosity of the ARAP class, default: 2
+-arap_beta (weight)  weight for the anchor vertex constraints, default: 10
+-arap_uni_wgt        use uniform weights instead of the cotan weights,
+                     default: false
+-arap_tol            tolerance for the nonlinear solver, default: 5.e-3
+
+-------------------- Code Structure:
+
+mathvector/*
+
+Is part of the original Mesh Viewer code. I did not write this. Has basic
+support for three-dimensional vectors.
+
+glut/*
+
+The GUI code. This was orignaly here, but I modified it extensively to add
+support for vertex selection, movement and rotation.
+
+mesh/*
+
+My main contribution to this code was the arap.h and arap.cpp classes.
+They contain the class Deformation which is responsible for deforming
+a mesh.
+
+***** Mesh Data structure and the view GUI framework are adopted from: ****
+
+This package contains MeshViewer 0.3.3 from 16.10.2010
+
+Maintainer: Helmut Cantzler < cantzler at gmx dot net >
+
+All files in this package can be freely distributed and used according
+to the terms of the GNU Lesser General Public License (LGPL). See the
+COPYING file in the root directory of this archive for more details.
+
+For more information look at Documentation/index.html or visit
+the MeshViewer website http://mview.sourceforge.net/

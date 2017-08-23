@@ -1,0 +1,75 @@
+Remesher - Final project of Digital Geometry Processing (UBC, CPSC524)
+Shayan Hoshyari
+
+! INSTALLATION
+
+In order to run the code CGAL and Armadillo have to be installed, and the
+make has to be tweaked so that it links to them correctly. The remesher is
+built via the commands:
+
+$ make remesh METHOD=opt (optimised version)
+$ make remesh (debug version)
+
+! RUNNING
+
+There are prepared examples of the code, they can simply executed via
+running this script:
+
+$ ./run_report_results.sh
+
+The results will be stored in result/data. To run the remesher on any
+other input use:
+
+$ ./bin/remesh.exe.opt -i <input_file> -o <output_file>
+  n_verts=<value -> number of final vertices>
+  proj_type=<current, patch, plane, or sphere -> projection type>
+  r_obtuse=<0 or 1 -> insertion for removing obtuse angles> 
+  ttri=<value in degrees -> It is one of the angles in fidelity criteria.>
+  tvert=<value in degrees -> It is one of the angles in fidelity criteria.>
+
+The output is written in vtk file format. A .stats file is also written
+which has statistics about the results.
+
+! CODE STRUCTURE
+
+include/GetPot:
+include/parameters.hxx:
+   External utility for reading command-line options.
+   
+include/indexed_list.hxx:
+   Template container for reference counting.
+   
+include/pointer_mesh.hxx:
+src/pointer_mesh.cxx:
+   My re-implementation of Cartel's EditMesh that is pointer based instead of
+   index based.
+   
+include/mesh_io.hxx:
+src/mesh_io.cxx:
+   I/O code. Supports off and obj as input, off and vtk as output.
+   
+include/predicates.hxx:
+src/predicates.cxx:
+   Jonathan Shewchuck's predicates code.
+   
+include/cgal_tools.hxx:
+src/cgal_tools.cxx:
+   Interface code to use CGAL's parametrization.
+   
+include/adaptive_remesher.hxx:
+src/adaptive_remesher.cxx:
+src/patch_projector.cxx:
+   Adaptive remeshing operations.
+   Projection classes that convert (T,b) to xyz.
+   
+src/remesh.exe.cxx:
+    Adaptive remesher executable.
+    
+src/area.exe.cxx:
+src/tests.exe.cxx:
+src/flip.exe.cxx:
+src/patch.exe.cxx:
+src/split.exe.cxx:
+src/collapse.exe.cxx:
+rc/make_sphere.exe.cxx:
+   Executables that were used for debugging.

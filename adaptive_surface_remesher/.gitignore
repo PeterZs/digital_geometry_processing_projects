@@ -1,0 +1,19 @@
+# ---------------- Visualization vtk files
+*vtk
+
+# --------------------------- Backup files
+*~
+\#*\#
+
+# --------------------------- Object files
+*o_dbg
+*o_opt
+
+# ---------------------------- Executables
+*.exe.opt
+*.exe.dbg
+
+# -------------------------- Eclipse stuff
+.settings*
+.project
+.cproject

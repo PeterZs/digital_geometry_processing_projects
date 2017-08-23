@@ -1,0 +1,86 @@
+Shayan Hoshyari
+Student #: 81382153
+
+Contents:
+ * Assignment 1
+ * Assignment 2
+ 
+/*****************************************************************************\
+                             Assignment 1: CPSC524
+\*****************************************************************************/
+
+The source code has the following structure:
+
+	* Mesh data structure and modification algorithms:
+	edit_mesh.cxx, edit_mesh.hxx
+
+	* Reading and writing mesh:
+	mesh_io.cxx, mesh_io.hxx
+
+	* Reading the command line options:
+	GetPot
+
+	* Makefile:
+	makefile
+
+The subdiviosion algorithms are added to the EditMesh class via the functions:
+
+	EditMesh::subdivide_loop()
+	with boundary support, has the option not to use init_adjacency.
+
+	EditMesh::subdivide_sqrt3()
+	with boundary support, uses init_adjacency.
+
+	EditMesh::subdivide_butterfly()
+	no boundary support, uses init_adjacency.
+
+To build the executable run:
+   $ make exec_subdiv
+
+Then it can be used in the following way:
+	 ./exec_subdiv <options>
+	  Where the options are (The marked ones are mandatory): 
+	  -i* <input file name> 
+	  -o <output file name> 
+	  -n <number of subdivision steps>	
+	  -m <0 or 1 or 2> where 0->loop, 1->sqrt3, 2->butterfly
+	  --vtk: also write vtk files.
+	  -h, --help: print this message 
+
+Examples:
+
+$ ./exec_subdiv -m 1 -n 3 -i example_meshes/715_duck_clean.off -o example_meshes/duck --vtk
+
+$ ./exec_subdiv -m 0 -n 3 -i example_meshes/pyramid.obj -o example_meshes/pyramid --vtk
+
+/*****************************************************************************\
+                             Assignment 2: CPSC524
+\*****************************************************************************/
+
+The simplification algorithms are added to the EditMesh class via the
+functions:
+
+init_simplification(), finalize_simplification(), simplify()
+
+The others are just internal and should be made private.
+	
+To build the executable run:
+   DEBUG version:     $ make exec_simplify 
+   OPTIMIZED version: $ make exec_simplify_opt
+
+Then it can be used in the following way (It writes .vtk files at various steps):
+     ./exec_simplify <options>
+     Where the options are (The marked ones are mandatory): 
+     -i* <input file name> 
+     -o <output file name> 
+     -n X1 Y1 X2 Y2 ... where Xi is target #removed_vertices and Yi number of files to be written by then
+     -m <0 or 1> where 1->vertex decimation, 2->quartic edge collapse
+     -nb <# files to write as proof> show ability to restore original mesh
+     -h, --help: print this message 
+
+
+Examples:
+
+./exec_simplify_opt -i dragon.off -o dragon -m 1 -n 640000 4 655973 200
+
+./exec_simplify_opt -i dragon.off -o dragon -m 1 -n 640000 4 655973 200

@@ -1,0 +1,63 @@
+This is at least a partial credits-file of people that have
+contributed in one way or another to the meshviewer.
+
+The fields are:
+	(N)ame.
+	(E)mail.
+	(W)eb-address.
+	(D)escription.
+-------------------------------------------------------------------------------
+
+N: Helmut Cantzler
+E: cantzler at gmx dot net
+D: Maintainer
+D: developed the qt3 and qt4 based versions
+D: added VRML1, VRML2, Geomview and GTS file format support (read & write)
+D: added texture display and filtering support
+D: added model translation and zoom
+
+N: Craig Robertson
+D: idea of the MeshViewer
+D: developed an early elementary glut based version
+
+N: Dr. Roland Kraus
+D: Early MS Windows port
+
+N: Alexey Dyachenko
+D: small fixes
+
+N: Eeri Kask
+D: small fixes
+
+N: Bernd Ziegler
+D: compiling fixes
+
+N: Bruno Denet
+D: correction of surface normals from gts files
+
+N: Toby Breckon
+E: toby.breckon@cranfield.ac.uk
+D: added PTY, X3D, VTK and OBJ file format support
+D: much improved Geomview file format support
+D: compiler fixes and several small improvements
+
+N: Vitaly Lipatov
+D: several compilation and code fixes
+
+N: Mike Loehr
+D: Full MS Windows port using LibQT & LibJpeg with MVC
+
+N: Martin Stolle
+D: Minor fix for the OBJ file format parser
+
+N: Nathan Packard
+D: Windows compilation fixes
+
+N: Michael Zimmermann
+D: added Shallo file format support
+
+N: Andreas Kloeckner
+D: GCC compilation fixes
+
+N: Eeri Kask
+D: MacOSX fixes

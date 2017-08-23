@@ -1,0 +1,13 @@
+*o
+qt3/*
+qt4/*
+xml/*
+mview
+latex/*
+html/*
+Documentation/*
+*TAGS
+.cproject
+.project
+.settings/*
+*.tag
