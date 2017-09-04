@@ -7,7 +7,6 @@
 //
 
 #include "mesh_io.h"
-#include "arap.h"
 
 #include "glmesh.h"
 
@@ -38,7 +37,6 @@ void setNameAndPath(char *n, Mesh *mesh)
 void initSettings(GLMeshSettings &settings)
 {
 	settings.mesh = NULL;
-	settings.deform = NULL;
 	settings.meshDisplayMode = SOLID;
 	settings.xShift = settings.yShift = settings.zShift = 0.0;
 	settings.clipping = 0.0;
@@ -60,10 +58,8 @@ void initSettings(GLMeshSettings &settings)
 
 int main(int argc, char **argv)
 {
-	PetscErrorCode ierr;
 
 	glutInit(&argc, argv);
-	ierr=PetscInitialize(&argc,&argv, NULL, NULL); CHKERRQ(ierr);
 
 	printf("\nMesh Viewer 0.3.3\n\n");
 
@@ -105,7 +101,6 @@ int main(int argc, char **argv)
 	 * Create the deformation
 	 */
 	settings.mesh->createEdges();
-	settings.deform = new Deformation(settings.mesh); CHKERRQ(settings.deform->ierr);
 
 	openglInit(settings);
 

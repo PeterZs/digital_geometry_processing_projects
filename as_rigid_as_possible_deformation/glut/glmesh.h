@@ -21,17 +21,15 @@
 #endif
  
 #include "mesh.h"
-#include "arap.h"
 
 // Types
 
 enum DisplayType {VERTICES=0, SOLID, WIRE, FRONTLINES, NOTHING};
-enum ActionType {NONE, TRANSLATE, ROTATE, ZOOM, SELECT, ARAP_MOVE, ARAP_ROTATE};
+enum ActionType {NONE, TRANSLATE, ROTATE, ZOOM, SELECT};
 
 struct GLMeshSettings
 {
   Mesh *mesh;
-  Deformation *deform;
 
   // Viewpoint data (Trackball, Translation, Zoom, Clipping)
   // ModelView Matrix

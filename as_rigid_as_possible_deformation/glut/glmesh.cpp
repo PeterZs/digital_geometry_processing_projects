@@ -7,7 +7,6 @@
 //
 
 #include "glmesh.h"
-#include "petscsys.h"
 
 // Texts
 #define ASCII_ESCAPE 27
@@ -230,19 +229,12 @@ void setTitle(void)
 
 void key(unsigned char k, int x, int y)
 {
-	PetscErrorCode ierr;
 
 	switch (k)
 	{
 	// Quit --------------------------------------
 	case ASCII_ESCAPE: // Quit (Esc)
-		if(settings.deform)
-		{
-			ierr=settings.deform->destroy();CHKERRV(ierr);
-			delete settings.deform;
-		}
 		if(settings.mesh) delete settings.mesh;
-		ierr=PetscFinalize();CHKERRV(ierr);
 		exit(0);
 		break;
 	// Display Modes-------------------------------
@@ -338,10 +330,6 @@ void key(unsigned char k, int x, int y)
 		break;
 	}
 
-	case '\\':
-		settings.deform->resetMeshPositions();
-		break;
-
 	// Other guys  --------------------------------
 	case 'c':
 		settings.enableCutBackFaces=!settings.enableCutBackFaces;
@@ -431,15 +419,6 @@ void mouseButton(int button, int state, int x, int y)
 			else if (selectMoveRot == 0)
 			{
 				actionMode = SELECT;
-			}
-			else if (selectMoveRot == 1)
-			{
-				actionMode = ARAP_MOVE;
-			}
-			else if (selectMoveRot == 2)
-			{
-				actionMode = ARAP_ROTATE;
-				tbPointToVector(x, y, tbLastPosition);
 			}
 			else
 			{
@@ -544,183 +523,6 @@ void mouseDrag(int x, int y)
 		break;
 	}
 
-	case ARAP_MOVE:
-	{
-		float pr[3], cr[3];
-
-		gluUnproject(lastMouseX, lastMouseY, pr);
-		gluUnproject(x, y, cr);
-		MathVector delta(cr[0] - pr[0], cr[1] - pr[1], cr[2] - pr[2]);
-		if(delta.length() < 0.2) return;
-
-		vector<int> anchor;
-		vector<float> newpos;
-
-		/*
-		 * Move all the selected points.
-		 */
-		for (int i = 0 ; i < settings.mesh->n_select() ; i++)
-		{
-			set<Vertex *> *setv = settings.mesh->getSelectedVertices(i);
-			Vertex *v;
-
-			if ( i == activeGroup)
-			{
-				for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-				{
-					v = *iv;
-					anchor.push_back(v->name);
-					newpos.push_back(v->x() + delta.v[0]);
-					newpos.push_back(v->y() + delta.v[1]);
-					newpos.push_back(v->z() + delta.v[2]);
-				}
-			} // end of active selection
-			else
-			{
-				for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-				{
-					v = *iv;
-					anchor.push_back(v->name);
-					newpos.push_back(v->x());
-					newpos.push_back(v->y());
-					newpos.push_back(v->z());
-				}
-			} // end of non active selection
-		} // End off loop over selected verts
-
-		/*
-		 * Deform
-		 */
-		settings.deform->deform(anchor, newpos);
-
-		/*
-		 * Update mouse
-		 */
-		lastMouseX=x;
-		lastMouseY=y;
-
-		/*
-		 * Redisplay
-		 */
-		glutPostRedisplay();
-		break;
-	} // End of case ARAP_MOVE
-
-	case ARAP_ROTATE:
-	{
-		break;
-		set<Vertex *> *setv;
-
-		/*
-		 * Find the rotation matrix
-		 */
-		float currentPosition[3], angle, dx, dy, dz;
-		GLfloat rotationMatrix[16];
-
-		tbPointToVector(x, y, currentPosition);
-
-		dx = currentPosition[0] - tbLastPosition[0];
-		dy = currentPosition[1] - tbLastPosition[1];
-		dz = currentPosition[2] - tbLastPosition[2];
-
-		if(sqrt(dx*dx + dy*dy + dz*dz) < 0.2) break;
-
-		angle = 90.0 * sqrt(dx * dx + dy * dy + dz * dz) * 2;
-
-		// tbLastPosition \cross tbNewPosition
-		tbAxis[0] = tbLastPosition[1] * currentPosition[2] -
-				tbLastPosition[2] * currentPosition[1];
-		tbAxis[1] = tbLastPosition[2] * currentPosition[0] -
-				tbLastPosition[0] * currentPosition[2];
-		tbAxis[2] = tbLastPosition[0] * currentPosition[1] -
-				tbLastPosition[1] * currentPosition[0];
-
-		tbLastPosition[0] = currentPosition[0];
-		tbLastPosition[1] = currentPosition[1];
-		tbLastPosition[2] = currentPosition[2];
-
-
-		float cent[3] = {0,0,0};
-		setv = settings.mesh->getSelectedVertices(activeGroup);
-		for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-		{
-			Vertex *v = *iv;
-			cent[0] += v->x();
-			cent[1] += v->y();
-			cent[2] += v->z();
-		}
-		cent[0] /= setv->size();
-		cent[1] /= setv->size();
-		cent[2] /= setv->size();
-
-		glPushMatrix();
-		glLoadIdentity();
-		glMultMatrixf((GLfloat*)settings.tbTransform);
-		glTranslatef(cent[0],cent[1],cent[2]);
-		glRotatef(angle, tbAxis[0], tbAxis[1], tbAxis[2]);
-		glTranslatef(-cent[0],-cent[1],-cent[2]);
-		glMultMatrixf((GLfloat*)settings.tbTransformInv);
-		glGetFloatv(GL_MODELVIEW_MATRIX, rotationMatrix);
-		glPopMatrix();
-
-		/*
-		 * Set the anchors
-		 */
-		vector<int> anchor;
-		vector<float> newpos;
-		/*
-		 * Move all the selected points.
-		 */
-		for (int i = 0 ; i < settings.mesh->n_select() ; i++)
-		{
-			setv = settings.mesh->getSelectedVertices(i);
-			Vertex *v;
-
-			if ( i == activeGroup)
-			{
-				for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-				{
-					v = *iv;
-					anchor.push_back(v->name);
-					float newXYZ[4];
-					float oldXYZ[4] = {v->x(), v->y(), v->z(), 1. };
-					gluMatMultVec(rotationMatrix, oldXYZ, newXYZ);
-					newpos.push_back(newXYZ[0]);
-					newpos.push_back(newXYZ[1]);
-					newpos.push_back(newXYZ[2]);
-				}
-			} // end of active selection
-			else
-			{
-				for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-				{
-					v = *iv;
-					anchor.push_back(v->name);
-					newpos.push_back(v->x());
-					newpos.push_back(v->y());
-					newpos.push_back(v->z());
-				}
-			} // end of non active selection
-		} // End off loop over selected verts
-
-		/*
-		 * Deform
-		 */
-		settings.deform->deform(anchor, newpos);
-
-		/*
-		 * Update mouse
-		 */
-		lastMouseX=x;
-		lastMouseY=y;
-
-		/*
-		 * Redisplay
-		 */
-		glutPostRedisplay();
-		break;
-	} // End of case (ARAP_ROTATE)
-
 	default: ;
 	// do nothing
 	}
@@ -728,113 +530,6 @@ void mouseDrag(int x, int y)
 
 void arrowKey(int k, int x, int y)
 {
-	if(activeGroup < 0) return;
-
-	PetscErrorCode ierr;
-	set<Vertex *> *setv;
-	GLfloat rotationMatrix[16];
-	const float angle = 5.;
-
-	/*
-	 * Find the rotation matrix
-	 */
-
-	// FInd center
-	float cent[3] = {0,0,0};
-	setv = settings.mesh->getSelectedVertices(activeGroup);
-	for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-	{
-		Vertex *v = *iv;
-		cent[0] += v->x();
-		cent[1] += v->y();
-		cent[2] += v->z();
-	}
-	cent[0] /= setv->size();
-	cent[1] /= setv->size();
-	cent[2] /= setv->size();
-
-	// create the matrix
-	glPushMatrix();
-	glLoadIdentity();
-	glMultMatrixf((GLfloat*)settings.tbTransform);
-	glTranslatef(cent[0],cent[1],cent[2]);
-	switch (k)
-	{
-	case GLUT_KEY_UP:
-		glRotatef(angle, 0+1, 0, 0 );
-		break;
-	case GLUT_KEY_DOWN:
-		glRotatef(angle, 0-1,0 , 0);
-		break;
-	case GLUT_KEY_LEFT:
-		glRotatef(angle, 0, 0-1, 0);
-		break;
-	case GLUT_KEY_RIGHT:
-		glRotatef(angle, 0,0+1 ,0 );
-		break;
-	case GLUT_KEY_PAGE_UP:
-		glRotatef(angle, 0, 0, 0-1);
-		break;
-	case GLUT_KEY_PAGE_DOWN:
-		glRotatef(angle, 0, 0, 0+1);
-		break;
-	}
-	glTranslatef(-cent[0],-cent[1],-cent[2]);
-	glMultMatrixf((GLfloat*)settings.tbTransformInv);
-	glGetFloatv(GL_MODELVIEW_MATRIX, rotationMatrix);
-	glPopMatrix();
-
-
-	/*
-	 * Set the anchors
-	 */
-	vector<int> anchor;
-	vector<float> newpos;
-	/*
-	 * Move all the selected points.
-	 */
-	for (int i = 0 ; i < settings.mesh->n_select() ; i++)
-	{
-		setv = settings.mesh->getSelectedVertices(i);
-		Vertex *v;
-
-		if ( i == activeGroup)
-		{
-			for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-			{
-				v = *iv;
-				anchor.push_back(v->name);
-				float newXYZ[4];
-				float oldXYZ[4] = {v->x(), v->y(), v->z(), 1. };
-				gluMatMultVec(rotationMatrix, oldXYZ, newXYZ);
-				newpos.push_back(newXYZ[0]);
-				newpos.push_back(newXYZ[1]);
-				newpos.push_back(newXYZ[2]);
-			}
-		} // end of active selection
-		else
-		{
-			for (auto iv = setv->begin() ; iv != setv->end() ; ++iv)
-			{
-				v = *iv;
-				anchor.push_back(v->name);
-				newpos.push_back(v->x());
-				newpos.push_back(v->y());
-				newpos.push_back(v->z());
-			}
-		} // end of non active selection
-	} // End off loop over selected verts
-
-	/*
-	 * Deform
-	 */
-	ierr=settings.deform->deform(anchor, newpos);CHKERRV(ierr);
-
-	/*
-	 * Redisplay
-	 */
-	glutPostRedisplay();
-
 }
 
 void mainMenu(int value)
