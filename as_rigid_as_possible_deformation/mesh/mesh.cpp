@@ -8,13 +8,15 @@
 
 #include "mesh.h"
 
-#ifndef WIN32
-    #include <values.h>
-    #include <limits.h>
-#else
-    #include <float.h>
-    #define MAXFLOAT FLT_MAX
-#endif
+// #ifndef WIN32
+//     #include <values.h>
+//     #include <limits.h>
+// #else
+//     #include <float.h>
+//     #define MAXFLOAT FLT_MAX
+// #endif
+
+#define MAXFLOAT 10000000
 
 Mesh::Mesh()
 {

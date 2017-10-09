@@ -8,8 +8,13 @@ EXE=mview
 #CPPFLAGS = $(INCPATH) -O2 $(ARMAFLAGS)
 #MYCPPFLAGS = --std=c++11 -O0 -g3 -Wall $(ARMAFLAGS) $(INCPATH)  
 MYCPPFLAGS = --std=c++11 ${CXX_FLAGS}   $(INCPATH) 
-INCPATH = -I. -Imesh -Imathvector 
-LIBS = -lGL -lGLU -lglut 
+INCPATH = -I. -Imesh -Imathvector
+
+## USE THIS ON LINUX
+# LIBS = -lGL -lGLU -glut
+
+## USE THIS WITH MSYS2 and windows
+LIBS = -lopengl32 -lglu32 -lfreeglut
 
 # --------------------------------------------------------------
 #                              Rules
