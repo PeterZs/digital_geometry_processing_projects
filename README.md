@@ -4,8 +4,9 @@
 
 The code implements [butterfly
 subdivision](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.133.8925&rep=rep1&type=pdf),
-[sqrt(3)-subdivision](https://www.google.ca/search?client=ubuntu&hs=hIP&channel=fs&dcr=0&q=3-sqrt+subdivisions&spell=1&sa=X&ved=0ahUKEwjA2Z2UyaTYAhVH9GMKHYGeAZcQvwUIJigA&biw=1080&bih=697),
-and finally [Loop subdivision](https://www.google.ca/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=9&ved=1ahUKEwik5vu_yaTYAhUI7WMKHcq6D6IQFgg5MAE&url=https%4A%3F%3Fpeople.eecs.berkeley.edu%3F~sequin%3FCS285%3FTEXT%3Floop88.pdf&usg=AOvVaw3B_p-kjcDA84HTtVk_57T-).
+[sqrt(3)-subdivision](https://www.graphics.rwth-aachen.de/media/papers/sqrt31.pdf),
+and finally [Loop
+subdivision](https://people.eecs.berkeley.edu/~sequin/CS284/TEXT/loop87.pdf).
 
 ## Mesh simplification
 
@@ -49,7 +50,8 @@ This folder implementes a surface remesher from the paper [ Explicit
 surface
 remeshing](http://www.cs.technion.ac.il/%7Egotsman/AmendedPubl/SGP/SGP03.pdf).
 As an example, the remeshed models of a hand and Max Planks bust are
-shown here.
+shown here. There is also a [report](./demo/dgp.pdf) and a
+[presentation](./demo/dgp_pres.pdf).
 
 <img src="./demo/remesher-maxplank-before.png" width="200"/> <img
 src="./demo/remesher-maxplank-after.png" width="200"/>
