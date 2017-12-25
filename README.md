@@ -4,13 +4,18 @@
 
 ## Mesh simplification
 
-![](./demo/simplification-dragon.png =200x)
+<img src="./demo/simplification-dragon.png"
+style="width: 200px;"/>
 
-![](./demo/simplification-edge-collapse-dragon-8855.png = 200x )
-![](./demo/simplification-edge-collapse-dragon-1715.png = 200x)
+<img src="./demo/simplification-edge-collapse-dragon-8855.png"
+style="width: 200px;"/>
+<img src="./demo/simplification-edge-collapse-dragon-1715.png"
+style="width: 200px;"/>
 
-![](./demo/simplification-vertex-decimation-dragon-8855.png = 200x)
-![](./demo/simplification-vertex-decimation-dragon-3829.png = 200x)
+<img src="./demo/simplification-vertex-decimation-dragon-8855.png"
+style="width: 200px;"/>
+<img src="./demo/simplification-vertex-decimation-dragon-3829.png"
+style="width: 200px;"/>
 
 
 ## As-rigid-as-possible mesh deformation
