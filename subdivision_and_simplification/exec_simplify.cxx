@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 	}
 
 	// Options
-	const int method = getpot.follow(0, "-m");
+	const int method = getpot.follow(1, "-m");
 	const int n_backward = getpot.follow(0, "-nb");	
 	if( ! getpot.search("-i") )
 	{
