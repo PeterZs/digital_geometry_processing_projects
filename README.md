@@ -11,9 +11,7 @@ and [Garland's edge collapse via quadratic error
 metrics](https://www.ri.cmu.edu/pub_files/pub2/garland_michael_1997_1/garland_michael_1997_1.pdf).
 
 Below is an example of the Chinese dragon mesh taken from the
-aim@shape repository.
-
-The original image shown below has roughly 600,000 vertices.
+aim@shape repository. The original image shown below has roughly 600,000 vertices.
 
 <img src="./demo/simplification-dragon.png"
 width="200"/>
@@ -42,10 +40,14 @@ width="200" />
 
 ## Surface remesher
 
-<img src="./demo/remesher-maxplank-before.png"
-width="200"/>
-<img src="./demo/remesher-maxplank-after.png"
-width="200"/>
+This folder implementes a surface remesher from the paper [ Explicit
+surface
+remeshing](http://www.cs.technion.ac.il/%7Egotsman/AmendedPubl/SGP/SGP03.pdf).
+As an example, the remeshed models of a hand and Max Planks bust are
+shown here.
+
+<img src="./demo/remesher-maxplank-before.png" width="200"/> <img
+src="./demo/remesher-maxplank-after.png" width="200"/>
 
 <img src="./demo/remesher-hand-before.png"
 width="200"/>
