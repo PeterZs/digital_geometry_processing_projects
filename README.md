@@ -41,8 +41,17 @@ width="200"/>
 <img src="./demo/simplification-vertex-decimation-dragon-3829.png"
 width="200" />
 
-
 ## As-rigid-as-possible mesh deformation
+
+The project includes an application for interactive deformation of
+meshes using the ARAP method.
+
+<img src="./demo/arap-1.png"
+width="200"/>
+<img src="./demo/arap-2.png"
+width="200"/>
+<img src="./demo/arap-3.png"
+width="200"/>
 
 ## Surface remesher
 
