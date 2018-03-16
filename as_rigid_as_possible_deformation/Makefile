@@ -6,9 +6,9 @@
 #PETSC_DIR=/home/hooshi/code/PETSc/petsc-3.6.3
 #PETSC_ARCH=serial-opt
 # Petsc 3.5 and newer
-#include ${PETSC_DIR}/lib/petsc/conf/variables
+include ${PETSC_DIR}/lib/petsc/conf/variables
 # Petsc 3.4 and older
-include ${PETSC_DIR}/conf/variables
+# include ${PETSC_DIR}/conf/variables
 
 # --------------------------------------------------------------
 #                              Flags

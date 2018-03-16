@@ -37,13 +37,13 @@ _n_total_deformations(0)
 	 * Read the options from command line
 	 */
 	PetscBool flg;
-	ierr=PetscOptionsGetInt(NULL, "-arap_max_iter", &_n_max_iter, NULL);CHKERRV(ierr);
-	ierr=PetscOptionsGetReal(NULL, "-arap_beta", &_beta, NULL);CHKERRV(ierr);
-	ierr=PetscOptionsGetReal(NULL, "-arap_tol", &_tol, NULL);CHKERRV(ierr);
+	ierr=PetscOptionsGetInt(NULL, NULL, "-arap_max_iter", &_n_max_iter, NULL);CHKERRV(ierr);
+	ierr=PetscOptionsGetReal(NULL, NULL, "-arap_beta", &_beta, NULL);CHKERRV(ierr);
+	ierr=PetscOptionsGetReal(NULL, NULL, "-arap_tol", &_tol, NULL);CHKERRV(ierr);
 	flg = (_should_use_uniform_wgt ? PETSC_TRUE : PETSC_FALSE);CHKERRV(ierr);
-	ierr=PetscOptionsGetBool(NULL, "-arap_uni_wgt", &flg, NULL);CHKERRV(ierr);
+	ierr=PetscOptionsGetBool(NULL, NULL, "-arap_uni_wgt", &flg, NULL);CHKERRV(ierr);
 	_should_use_uniform_wgt = (bool)flg;
-	ierr=PetscOptionsGetInt(NULL, "-arap_v", &_verbosity, NULL);CHKERRV(ierr);
+	ierr=PetscOptionsGetInt(NULL, NULL, "-arap_v", &_verbosity, NULL);CHKERRV(ierr);
 
 
 	/*
