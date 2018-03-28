@@ -44,8 +44,8 @@ http://glew.sourceforge.net/
 ### GLM
 GLM is the open gl math extensions and provides a lot of useful functionality when interfacing with
 GLSL, the OpenGL shader language. This library provides types, and functions on those types
-used SOLELY FOR RENDERING. This is important, because the glm types do not oer double
-precision, and do not interface easily with Eigen. Use glm only for visual eects or when passing
+used SOLELY FOR RENDERING. This is important, because the glm types do not offer double
+precision, and do not interface easily with Eigen. Use glm only for visual effects or when passing
 data to the GPU in main.
 http://glm.g-truc.net/0.9.5/index.html
 
