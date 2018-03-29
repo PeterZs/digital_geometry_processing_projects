@@ -1,4 +1,4 @@
-# Cartel
+#Cartel
 Mesh Viewing and Modification Tool
 
 ## Overview 

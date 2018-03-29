@@ -6,12 +6,14 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>.\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;
+%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>.\lib\$(PlatformName)\$(ConfigurationName)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glu32.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemGroup />
-</Project>
+      <AdditionalDependencies>glew32s.lib;
+glu32.lib;
+opengl32.lib;
+glfw3.lib;
+% (AdditionalDependencies)</ AdditionalDependencies></ Link><
+      / ItemDefinitionGroup><ItemGroup /></ Project>

@@ -1,0 +1,6 @@
+---
+Language: Cpp
+BasedOnStyle: llvm
+UseTab: Never
+BreakBeforeBraces: GNU
+IndentWidth: 2
