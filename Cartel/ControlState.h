@@ -47,38 +47,38 @@
 #define VIEW_ALL (VIEW_FACES | VIEW_EDGES | VIEW_VERTS)
 
 enum RENDER_MODE
-{
-  MODE_VIEW = 0,
-  MODE_SELECT,
-  MODE_MAX,
-};
+  {
+    MODE_VIEW = 0,
+    MODE_SELECT,
+    MODE_MAX,
+  };
 
 enum EDIT_OPERATION
-{
-  EDIT_NONE = 0,
-  EDIT_RELOAD,
-  EDIT_LOAD_NEXT,
-  EDIT_SAVE_IMAGE,
-  EDIT_CLEAR_SELECTION,
-  EDIT_SQRT3_SUBDIV,
-  EDIT_BUTTERLY_SUBDIV,
-  EDIT_SIMPLIFIY_VERTEX_REMOVAL,
-  EDIT_SIMPLIFY_EDGE_COLLAPSE,
-  EDIT_RELOCATE_VERTS,
-  EDIT_COLLAPSE_EDIT,
-  EDIT_AREA_RELOCATION,
-  EDIT_DELAUNAY,
-  EDIT_REMESH,
-  EDIT_COLLAPSE_FAST_EDIT,
-  EDIT_PRETTY,
-  EDIT_DEBUG,
-  EDIT_MAX,
-  // CS 524: Add new operations here
-};
+  {
+    EDIT_NONE = 0,
+    EDIT_RELOAD,
+    EDIT_LOAD_NEXT,
+    EDIT_SAVE_IMAGE,
+    EDIT_CLEAR_SELECTION,
+    EDIT_SQRT3_SUBDIV,
+    EDIT_BUTTERLY_SUBDIV,
+    EDIT_SIMPLIFIY_VERTEX_REMOVAL,
+    EDIT_SIMPLIFY_EDGE_COLLAPSE,
+    EDIT_RELOCATE_VERTS,
+    EDIT_COLLAPSE_EDIT,
+    EDIT_AREA_RELOCATION,
+    EDIT_DELAUNAY,
+    EDIT_REMESH,
+    EDIT_COLLAPSE_FAST_EDIT,
+    EDIT_PRETTY,
+    EDIT_DEBUG,
+    EDIT_MAX,
+    // CS 524: Add new operations here
+  };
 
 class ControlState
 {
-public:
+ public:
   glm::vec3 viewPan;
   float viewTheta;
   float viewPhi;
@@ -126,14 +126,14 @@ public:
   bool view_axis;
   double zoom_step;
 
-  ControlState()
-      : viewTheta(0), viewPhi(0), viewDepth(0), arrL(0), arrR(0), arrU(0),
-        arrD(0), mouseX(0), mouseY(0), mouseBtnL(0), mouseBtnC(0), mouseBtnR(0),
-        window(NULL), w(NULL), mode(MODE_SELECT),
-        view_mode(VIEW_FACES | VIEW_EDGES), op(EDIT_NONE), view_axis(true)
-  {
-    clearViewDeltas();
-  }
+ ControlState()
+   : viewTheta(0), viewPhi(0), viewDepth(0), arrL(0), arrR(0), arrU(0),
+    arrD(0), mouseX(0), mouseY(0), mouseBtnL(0), mouseBtnC(0), mouseBtnR(0),
+    window(NULL), w(NULL), mode(MODE_SELECT),
+    view_mode(VIEW_FACES | VIEW_EDGES), op(EDIT_NONE), view_axis(true)
+    {
+      clearViewDeltas();
+    }
 
   ~ControlState();
   int init(WorldState &w);
@@ -179,21 +179,25 @@ public:
   }
 
   void markSelectionProcessed() { select_dirty = false; }
+
+  static ControlState& singleton() {return m_singleton;}
+
+  // GLFW CALLBACK FUNCTIONS
+  static void printHelp();
+  static void error_callback(int error, const char *desc);
+  static void reshape_callback(GLFWwindow *win, int w, int h);
+  static void key_callback(GLFWwindow *window, int key, int scancode, int action,
+			   int mode);
+  static void char_callback(GLFWwindow *window, unsigned int c);
+  static void mouseBtn_callback(GLFWwindow *win, int button, int action, int mod);
+  static void mousePos_callback(GLFWwindow *win, double x, double y);
+  static void mouseScroll_callback(GLFWwindow *win, double x_offset,
+				   double y_offset);
+  static void mouseEnter_callback(GLFWwindow *win, int entered);
+
+ private:
+  static ControlState m_singleton;
 };
-extern ControlState c_state;
 
-extern void printHelp();
-
-/* GLFW callback funtions */
-static void error_callback(int error, const char *desc);
-static void reshape_callback(GLFWwindow *win, int w, int h);
-static void key_callback(GLFWwindow *window, int key, int scancode, int action,
-                         int mode);
-static void char_callback(GLFWwindow *window, unsigned int c);
-static void mouseBtn_callback(GLFWwindow *win, int button, int action, int mod);
-static void mousePos_callback(GLFWwindow *win, double x, double y);
-static void mouseScroll_callback(GLFWwindow *win, double x_offset,
-                                 double y_offset);
-static void mouseEnter_callback(GLFWwindow *win, int entered);
 
 #endif // CONTROL_STATE_H

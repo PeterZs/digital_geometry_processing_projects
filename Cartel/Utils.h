@@ -38,6 +38,7 @@
 #include <GLFW/glfw3.h>
 
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 #include <glm/glm.hpp>
 #include <stdio.h>
 #include <string>

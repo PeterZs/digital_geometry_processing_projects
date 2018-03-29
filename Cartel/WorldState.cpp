@@ -101,12 +101,12 @@ void WorldState::loadLight(unsigned int i)
 {
   // Load lights based on their index so as not to overwrite other lights.
   char lposition[20], la[20], ld[20], ls[20], intensity[20];
-  sprintf(lposition, "Light%d.LPosition\0",
+  sprintf(lposition, "Light%d.LPosition",
           i); // do not remove the \0 or you'll break shaders
-  sprintf(la, "Light%d.La\0", i);
-  sprintf(ld, "Light%d.Ld\0", i);
-  sprintf(ls, "Light%d.Ls\0", i);
-  sprintf(intensity, "Light%d.Intensity\0", i);
+  sprintf(la, "Light%d.La", i);
+  sprintf(ld, "Light%d.Ld", i);
+  sprintf(ls, "Light%d.Ls", i);
+  sprintf(intensity, "Light%d.Intensity", i);
 
   glUniform4fv(glGetUniformLocation(shaders[currentProgram], lposition), 1,
                glm::value_ptr(lights[i].LPosition));
@@ -130,10 +130,10 @@ void WorldState::loadMaterial(unsigned int i)
 {
   // Load lights based on their index so as not to overwrite other lights.
   char ka[20], kd[20], ks[20], shininess[20];
-  sprintf(ka, "Material%d.Ka\0", i);
-  sprintf(kd, "Material%d.Kd\0", i);
-  sprintf(ks, "Material%d.Ks\0", i);
-  sprintf(shininess, "Material%d.Shininess\0", i);
+  sprintf(ka, "Material%d.Ka", i);
+  sprintf(kd, "Material%d.Kd", i);
+  sprintf(ks, "Material%d.Ks", i);
+  sprintf(shininess, "Material%d.Shininess", i);
 
   // printf("%f %f %f\n", materials[i].Ka);
 
@@ -157,14 +157,14 @@ void WorldState::loadMaterials()
 
 void WorldState::loadColorMaterial(glm::vec4 color)
 {
-  glUniform3fv(glGetUniformLocation(shaders[currentProgram], "Material0.Ka\0"),
+  glUniform3fv(glGetUniformLocation(shaders[currentProgram], "Material0.Ka"),
                1, glm::value_ptr(glm::vec3(color)));
-  glUniform3fv(glGetUniformLocation(shaders[currentProgram], "Material0.Kd\0"),
+  glUniform3fv(glGetUniformLocation(shaders[currentProgram], "Material0.Kd"),
                1, glm::value_ptr(glm::vec3(0.6, 0.6, 0.6)));
-  glUniform3fv(glGetUniformLocation(shaders[currentProgram], "Material0.Ks\0"),
+  glUniform3fv(glGetUniformLocation(shaders[currentProgram], "Material0.Ks"),
                1, glm::value_ptr(glm::vec3(0.6, 0.6, 0.6)));
   glUniform1f(
-      glGetUniformLocation(shaders[currentProgram], "Material0.Shininess\0"),
+      glGetUniformLocation(shaders[currentProgram], "Material0.Shininess"),
       0.5f);
 }
 

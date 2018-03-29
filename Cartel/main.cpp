@@ -74,6 +74,8 @@ const char *mesh_files[] = {"Mesh/camel.obj",    "Mesh/camel_simple.obj",
 // main loop, does everything: poll events, update world, render
 void mainloop()
 {
+  ControlState &c_state = ControlState::singleton();
+  
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -381,7 +383,7 @@ void mainloop()
           glGetUniformLocation(w_state->getCurrentProgram(), "top_right"), 1,
           glm::value_ptr(s_tr));
 
-      drawBox(s_bl.x, s_bl.y, s_tr.x, s_tr.y);
+      drawBox(s_bl.x, s_bl.y, s_tr.x, s_tr.y, c_state.width, c_state.height);
     }
 
   /*************************************
@@ -455,7 +457,7 @@ int main(int argc, char *argv[])
   // context exists (created with the window)
 
   w_state = new WorldState();
-  c_state.init(*w_state);
+  ControlState::singleton().init(*w_state);
 
 /*********************************************
  * GLEW SETUP
@@ -518,7 +520,7 @@ int main(int argc, char *argv[])
   /*********************************************
    * SETUP IMGUI
    *********************************************/
-  ImGui_ImplGlfwGL3_Init(c_state.window, false);
+  ImGui_ImplGlfwGL3_Init(ControlState::singleton().window, false);
 
   /*********************************************
    * LOAD MESH
@@ -526,7 +528,7 @@ int main(int argc, char *argv[])
   // instruct the mainloop to load the mesh at the first iteration
   mesh_curr =
       2; // you can set the default model to load, or -1 for none at all.
-  c_state.op = EDIT_RELOAD;
+  ControlState::singleton().op = EDIT_RELOAD;
 
   g_axis = createAxis(*r_state[1], 1);
 
@@ -540,9 +542,9 @@ int main(int argc, char *argv[])
   /*********************************************
    * MAIN LOOP
    *********************************************/
-  printHelp();
+  ControlState::printHelp();
 
-  while (!glfwWindowShouldClose(c_state.window))
+  while (!glfwWindowShouldClose(ControlState::singleton().window))
     mainloop();
 
   /*********************************************
