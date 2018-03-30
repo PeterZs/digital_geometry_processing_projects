@@ -1,0 +1,62 @@
+# DO NOT DELETE
+
+build/contrib/imgui/imgui.o_dbg: contrib/imgui/imgui.h
+build/contrib/imgui/imgui.o_dbg: contrib/imgui/imconfig.h
+build/contrib/imgui/imgui.o_dbg: contrib/imgui/imgui_internal.h
+build/contrib/imgui/imgui.o_dbg: contrib/imgui/stb_textedit.h
+build/contrib/imgui/imgui_draw.o_dbg: contrib/imgui/imgui.h
+build/contrib/imgui/imgui_draw.o_dbg: contrib/imgui/imconfig.h
+build/contrib/imgui/imgui_draw.o_dbg: contrib/imgui/imgui_internal.h
+build/contrib/imgui/imgui_draw.o_dbg: contrib/imgui/stb_textedit.h
+build/contrib/imgui/imgui_draw.o_dbg: contrib/imgui/stb_rect_pack.h
+build/contrib/imgui/imgui_draw.o_dbg: contrib/imgui/stb_truetype.h
+build/Texture.o_dbg: Texture.h
+build/ShaderUtils.o_dbg: ShaderUtils.h Utils.h
+build/ControlState.o_dbg: ControlState.h WorldState.h TextureTypes.h
+build/ControlState.o_dbg: Texture.h contrib/imgui/imgui.h
+build/ControlState.o_dbg: contrib/imgui/imconfig.h
+build/ControlState.o_dbg: ./contrib/imgui/imgui_impl_glfw_gl3.h
+build/VBuffer.o_dbg: VBuffer.h RenderState.h
+build/WorldState.o_dbg: WorldState.h TextureTypes.h Texture.h
+build/EditMesh.o_dbg: EditMesh.h
+build/Model.o_dbg: Model.h DrawMesh.h IBuffer.h RenderState.h VBuffer.h
+build/Model.o_dbg: EditMesh.h
+build/DrawMesh.o_dbg: DrawMesh.h IBuffer.h RenderState.h VBuffer.h Utils.h
+build/IBuffer.o_dbg: IBuffer.h RenderState.h
+build/main.o_dbg: contrib/imgui/imgui.h contrib/imgui/imconfig.h
+build/main.o_dbg: ./contrib/imgui/imgui_impl_glfw_gl3.h ControlState.h
+build/main.o_dbg: WorldState.h TextureTypes.h Texture.h DrawMesh.h IBuffer.h
+build/main.o_dbg: RenderState.h VBuffer.h EditMesh.h MeshUtils.h Model.h
+build/main.o_dbg: OBJLoader.h ShaderUtils.h TextureUtils.h Utils.h
+build/main.o_dbg: contrib/stb_image_write.h
+# DO NOT DELETE
+
+build/contrib/imgui/imgui.o_opt: contrib/imgui/imgui.h
+build/contrib/imgui/imgui.o_opt: contrib/imgui/imconfig.h
+build/contrib/imgui/imgui.o_opt: contrib/imgui/imgui_internal.h
+build/contrib/imgui/imgui.o_opt: contrib/imgui/stb_textedit.h
+build/contrib/imgui/imgui_draw.o_opt: contrib/imgui/imgui.h
+build/contrib/imgui/imgui_draw.o_opt: contrib/imgui/imconfig.h
+build/contrib/imgui/imgui_draw.o_opt: contrib/imgui/imgui_internal.h
+build/contrib/imgui/imgui_draw.o_opt: contrib/imgui/stb_textedit.h
+build/contrib/imgui/imgui_draw.o_opt: contrib/imgui/stb_rect_pack.h
+build/contrib/imgui/imgui_draw.o_opt: contrib/imgui/stb_truetype.h
+build/Texture.o_opt: Texture.h
+build/ShaderUtils.o_opt: ShaderUtils.h Utils.h
+build/ControlState.o_opt: ControlState.h WorldState.h TextureTypes.h
+build/ControlState.o_opt: Texture.h contrib/imgui/imgui.h
+build/ControlState.o_opt: contrib/imgui/imconfig.h
+build/ControlState.o_opt: ./contrib/imgui/imgui_impl_glfw_gl3.h
+build/VBuffer.o_opt: VBuffer.h RenderState.h
+build/WorldState.o_opt: WorldState.h TextureTypes.h Texture.h
+build/EditMesh.o_opt: EditMesh.h
+build/Model.o_opt: Model.h DrawMesh.h IBuffer.h RenderState.h VBuffer.h
+build/Model.o_opt: EditMesh.h
+build/DrawMesh.o_opt: DrawMesh.h IBuffer.h RenderState.h VBuffer.h Utils.h
+build/IBuffer.o_opt: IBuffer.h RenderState.h
+build/main.o_opt: contrib/imgui/imgui.h contrib/imgui/imconfig.h
+build/main.o_opt: ./contrib/imgui/imgui_impl_glfw_gl3.h ControlState.h
+build/main.o_opt: WorldState.h TextureTypes.h Texture.h DrawMesh.h IBuffer.h
+build/main.o_opt: RenderState.h VBuffer.h EditMesh.h MeshUtils.h Model.h
+build/main.o_opt: OBJLoader.h ShaderUtils.h TextureUtils.h Utils.h
+build/main.o_opt: contrib/stb_image_write.h
