@@ -5,13 +5,15 @@
  * formats.
  */
 
-#ifndef MESH_IO_HXX
-#define MESH_IO_HXX
+#ifndef HOOSHI_MESH_IO_HXX
+#define HOOSHI_MESH_IO_HXX
 
 #include <string>
 
 #include "edit_mesh.hxx"
 
+namespace hooshi {
+  
 // EditMesh: All functions are members of this class.
 class MeshIO
 {
@@ -32,4 +34,8 @@ public:
 	void write_obj(const std::string&) const;
 };
 
+} // End of hooshi
+
 #endif
+
+  

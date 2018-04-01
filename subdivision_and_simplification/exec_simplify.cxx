@@ -17,6 +17,7 @@
 #include "GetPot"
 
 using namespace std;
+using namespace hooshi;
 
 void print_help()
 {

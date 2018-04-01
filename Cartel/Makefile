@@ -8,8 +8,8 @@
 
 CC = g++
 CFLAGS := -std=c++11 -Wall
-CFLAGS_DBG := -g -O0
-CFLAGS_OPT := -O3 -mtune=native
+CFLAGS_DBG := -g -O0 -DDEBUG -Wpedantic
+CFLAGS_OPT := -O3 -mtune=native -DNDEBUG -Wpedantic
 EXT := _opt
 
 
@@ -44,8 +44,7 @@ SRC := contrib/imgui/imgui_impl_glfw_gl3.cpp \
        EditMesh.cpp \
        Model.cpp \
        DrawMesh.cpp \
-       IBuffer.cpp \
-       main.cpp 
+       IBuffer.cpp 
 
 OBJ = $(SRC:%.cpp=build/%.o${EXT})
 
@@ -60,7 +59,7 @@ run: build execute
 
 
 ${BIN}: build/main.o${EXT} ${OBJ}
-	${CC} -o $@ $^  ${LFLAGS} 
+	${CC} -o $@ $^  ${LFLAGS}
 
 build/%.o${EXT}: %.cpp
 	@ mkdir -p $(@D)
@@ -68,6 +67,12 @@ build/%.o${EXT}: %.cpp
 
 clean:
 	rm -rf *~ ${OBJ}  ${BIN} build
+
+Cartel${EXT}.a: ${OBJ}
+	ar rcs $@ ${OBJ} 
+
+lib:  Cartel${EXT}.a
+
 
 .PHONY: execute run clean depend
 

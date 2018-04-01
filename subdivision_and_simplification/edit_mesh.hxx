@@ -29,8 +29,8 @@
  * triangular mesh.
  */
 
-#ifndef EDIT_MESH_HXX
-#define EDIT_MESH_HXX
+#ifndef HOOSHI_EDIT_MESH_HXX
+#define HOOSHI_EDIT_MESH_HXX
 
 #include <Eigen/Core>
 
@@ -43,6 +43,8 @@
 #include "geometry.hxx"
 
 //#define USE_PREV
+
+namespace hooshi {
 
 const std::size_t HOLE_INDEX = static_cast<std::size_t>( -1 );
 
@@ -238,7 +240,8 @@ public:
     // Prepare the mesh to start the simplification process.
     // input: type: 1 for vertex decimation, 2 for quartic edge collapse.
     void init_simplification(const uint type);
-    
+
+    uint  is_simplification_in_progress() const {return  _is_simplification_in_progress;}
     // Free the memory used while simplifying. Not calling this causes
     // memory leak.
     void finalize_simplification();
@@ -367,7 +370,7 @@ public:
     void get_draw_data( float *verts, int *indices ) const;
     void get_draw_normals( float *normals ) const;
     void get_draw_selection( int *selection ) const;
-    int  get__edit_count() const;
+    int  get_edit_count() const;
     void get_face_neighbors(int face_index, size_t neighbors[3]);
     void flag_edited();
 
@@ -860,7 +863,7 @@ inline std::size_t EditMesh::get_face_size() const
         return _face_to_he.size();
 }
 
-inline int EditMesh::get__edit_count() const
+inline int EditMesh::get_edit_count() const
 {
     return _edit_count;
 }
@@ -882,5 +885,7 @@ inline void EditMesh::flag_edited()
 {
     ++_edit_count;
 }
+
+} // End of namespace hooshi
 
 #endif /* EDIT_MESH_HXX */

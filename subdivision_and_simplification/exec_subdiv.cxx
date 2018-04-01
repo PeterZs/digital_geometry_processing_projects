@@ -13,6 +13,7 @@
 // A Cartel always needs its Drugs. Pot in this case! :)
 #include "GetPot"
 
+using namespace hooshi;
 using std::cout;
 using std::endl;
 using std::string;

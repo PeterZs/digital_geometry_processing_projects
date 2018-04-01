@@ -1,9 +1,9 @@
 CXX= g++
 # debug version
-CFLAGS= --std=c++11 -g3 -O0 -Wall -Wpedantic
+CFLAGS= --std=c++11 -g -O0 -Wall -Wpedantic -DDEBUG -DLINUX
 LFLAGS= 
 # optimized version
-CFLAGS_OPT= --std=c++11 -g0 -O2 -DNDEBUG
+CFLAGS_OPT= --std=c++11 -Wall -O3 -DNDEBUG -mtune=native -DLINUX
 LFLAGS_OPT= 
 
 L_DIR=
@@ -20,15 +20,29 @@ EXEC_OPT= $(SRC_E:%.cxx=%_opt)
 all: $(EXEC)
 
 # DEBUG VERSION RULES
-exec_%: exec_%.o $(OBJ)
+exec_simplify: exec_simplify.o $(OBJ)
 	$(CXX) $(CFLAGS) $(INC_DIR) $(L_DIR) -o $@ $^ $(LFLAGS)
+
+exec_subdiv: exec_subdiv.o $(OBJ)
+	$(CXX) $(CFLAGS) $(INC_DIR) $(L_DIR) -o $@ $^ $(LFLAGS)
+
+exec_cartel: exec_cartel.o $(OBJ)
+	make -C Cartel lib METHOD=dbg
+	$(CXX) $(CFLAGS) $(INC_DIR) $(L_DIR) -o $@ $^ $(LFLAGS) Cartel/Cartel_dbg.a $(shell pkg-config --static --libs glew glfw3 gl)
 
 %.o: %.cxx $(wildcard *.hxx)
 	$(CXX) $(CFLAGS) $(INC_DIR) -c -o $@ $< 
 
 # OPTIMIZED VERSION RULES
-exec_%_opt: exec_%.o_opt $(OBJ_OPT)
+exec_subdiv_opt: exec_subdiv.o_opt $(OBJ_OPT)
 	$(CXX) $(CFLAGS_OPT) $(INC_DIR) $(L_DIR) -o $@ $^ $(LFLAGS_OPT)
+
+exec_simplify_opt: exec_simplify.o_opt $(OBJ_OPT)
+	$(CXX) $(CFLAGS_OPT) $(INC_DIR) $(L_DIR) -o $@ $^ $(LFLAGS_OPT)
+
+exec_cartel_opt: exec_cartel.o_opt $(OBJ_OPT)
+	make -C Cartel lib METHOD=opt
+	$(CXX) $(CFLAGS) $(INC_DIR) $(L_DIR) -o $@ $^ $(LFLAGS) Cartel/Cartel_opt.a $(shell pkg-config --static --libs glew glfw3 gl)
 
 %.o_opt: %.cxx $(wildcard *.hxx)
 	$(CXX) $(CFLAGS_OPT) $(INC_DIR) -c -o $@ $< 

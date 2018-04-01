@@ -86,7 +86,7 @@ void buildShader(GLenum shaderType, const char *path, GLuint &shader)
 #ifdef DEBUG
   GLenum status = GL_NO_ERROR;
   if ((status = glGetError()) != GL_NO_ERROR)
-    printf("Shader creation failed: %08x\n", status);
+    printf("Shader creation for file %s failed: %08x\n", path, status);
 #endif
 }
 

@@ -12,6 +12,7 @@
 #include "mesh_io.hxx"
 
 using namespace std;
+using namespace hooshi;
 
 void make_mesh1(EditMesh &m1)
 {

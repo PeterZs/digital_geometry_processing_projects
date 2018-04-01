@@ -7,6 +7,8 @@
 
 #include "mesh_io.hxx"
 
+namespace hooshi {
+  
 using std::unordered_map;
 using std::fstream;
 using std::string;
@@ -563,4 +565,7 @@ void MeshIO::write_vtk(const string& fname) const
         fclose(fl);
 
     }
+
 }
+
+} // End of hooshi
