@@ -4,7 +4,20 @@ Student #: 81382153
 Contents:
  * Assignment 1
  * Assignment 2
- 
+
+
+/*****************************************************************************\
+                             NEW: **exec_cartel**
+\*****************************************************************************/
+Build via
+(debug     version) make exec_cartel
+(optimized version) make exec_cartel_opt
+
+Run via:
+./exec_cartel  <mesh_address>
+
+And then use the functionality in a GUI.
+
 /*****************************************************************************\
                              Assignment 1: CPSC524
 \*****************************************************************************/
@@ -84,3 +97,8 @@ Examples:
 ./exec_simplify_opt -i dragon.off -o dragon -m 1 -n 640000 4 655973 200
 
 ./exec_simplify_opt -i dragon.off -o dragon -m 1 -n 640000 4 655973 200
+
+
+/*****************************************************************************\
+                             NEW: **exec_cartel**
+\*****************************************************************************/
