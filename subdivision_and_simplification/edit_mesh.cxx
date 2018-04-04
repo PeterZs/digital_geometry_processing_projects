@@ -236,6 +236,16 @@ namespace hooshi {
     init_adjacency( xyzPositions.size() / 3, triangleVerts, _he_data, _face_to_he, _vert_to_he );
   }
 
+  EditMesh* EditMesh::clone()
+  {
+    EditMesh* m = new EditMesh();
+    m->_verts = _verts;
+    m->_he_data = _he_data;
+    m->_face_to_he = _face_to_he;
+    m->_vert_to_he = _vert_to_he;
+
+    return m;
+  }
 
   HalfEdge* EditMesh::find_twin( std::size_t vFrom, std::size_t vTo ){
     vvert_iterator it;
@@ -1194,7 +1204,7 @@ namespace hooshi {
 	// for each vertex of the face
 	for( int j = 0; j < 3; j++){
 	  Eigen::Vector3d vert = get_vertex(he->vert);
-	  indices[3*continuous_id+j] = 3*continuous_id+j;
+	  if(indices) indices[3*continuous_id+j] = 3*continuous_id+j;
 
 	  // for each component of the vertex
 	  for( int k = 0; k < 3; k++){
@@ -2856,6 +2866,7 @@ namespace hooshi {
       default: break;
       }
     _is_simplification_in_progress= 0;
+
   }
   void EditMesh::update_priority(const std::size_t id)
   {
@@ -4113,6 +4124,17 @@ namespace hooshi {
       }
 
     return false;
+  }
+
+  void EditMesh::updateBBox()
+  {
+    Eigen::AlignedBox3d bb;
+    for (auto &v:_verts)
+      {
+	bb.extend(v);
+      }
+    bboxMin = bb.min();
+    bboxMax = bb.max();
   }
 
 } // End of hooshi

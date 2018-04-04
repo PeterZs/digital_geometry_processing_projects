@@ -46,14 +46,14 @@
 
 namespace hooshi {
 
-const std::size_t HOLE_INDEX = static_cast<std::size_t>( -1 );
+  const std::size_t HOLE_INDEX = static_cast<std::size_t>( -1 );
 
 
-/****************************************************************************\
+  /****************************************************************************\
                                 Half Edge
 \****************************************************************************/
-struct HalfEdge
-{
+  struct HalfEdge
+  {
     // Index of next half-edge in the loop.
     std::size_t next; 
 #ifdef USE_PREV
@@ -71,59 +71,60 @@ struct HalfEdge
     // Index of face to the "left" of this edge. Can be HOLE_INDEX
     // for boundary half edge
     std::size_t face; 
-};
+  };
 
 
-/****************************************************************************\
+  /****************************************************************************\
                                  Iterators
 \****************************************************************************/
 
-// Verts around a vert
-class vvert_iterator
-{
-private:
+  // Verts around a vert
+  class vvert_iterator
+  {
+  private:
     friend class EditMesh;
     const HalfEdge* m_cur;
     const HalfEdge* m_end;
-};
+  };
 
-// Faces around a vert
-class vface_iterator
-{
-private:
+  // Faces around a vert
+  class vface_iterator
+  {
+  private:
     friend class EditMesh;
     const HalfEdge* m_cur;
     const HalfEdge* m_end;
     const HalfEdge* m_next;
-};
+  };
 
-// Verts of a face
-class fvert_iterator
-{
-private:
+  // Verts of a face
+  class fvert_iterator
+  {
+  private:
     friend class EditMesh;
     const HalfEdge* m_cur;
     const HalfEdge* m_end;
-};
+  };
 
-// Faces around a face
-class fface_iterator
-{
-private:
+  // Faces around a face
+  class fface_iterator
+  {
+  private:
     friend class EditMesh;
     const HalfEdge* m_cur;
     const HalfEdge* m_end;
-};
+  };
 
 
-/****************************************************************************\
+  /****************************************************************************\
                                  EditMesh
 \****************************************************************************/
-class EditMesh
-{
-public:
+  class EditMesh
+  {
+  public:
 
     EditMesh();
+    EditMesh *clone();
 
     /**
      * Initialize the mesh from existing data.  \param xyzPositions A
@@ -161,7 +162,7 @@ public:
     /************************************
      * Mesh modification functions
      ************************************/
-public:
+  public:
 	
     // Create maps from half edge indices to edge and boundary edge indices.
     void init_edge_maps();
@@ -289,7 +290,7 @@ public:
     /*================================================
      * Iterator functions
      *================================================*/
-public:
+  public:
     /**
      * Initialize an iterator that visits the 1-ring of 'vertex'.
      * \param it The iterator to initialize.
@@ -351,7 +352,7 @@ public:
     /*====================================================
      * Helper Functions
      *====================================================*/
-public:
+  public:
     void getIndicesForFace( size_t tri_index, size_t indicesForFace[3] ) const;
     Eigen::Vector3d getFaceMidpoint(size_t tri_index);
 	
@@ -363,7 +364,7 @@ public:
     /*====================================================
      * Reflection Interface (learn stuff about the mesh)
      *====================================================*/
-public:
+  public:
     /* get a list of all vertices/face indices in the mesh as floats in
      * contiguous memory. Used for rendering so loss of precision unimportant
      */
@@ -390,7 +391,7 @@ public:
 
     void write_to_obj_stream( std::ostream& stream ) const;
 
-public:
+  public:
     const HalfEdge& prev( const HalfEdge& cur ) const;
     const HalfEdge& next( const HalfEdge& cur ) const;
     const HalfEdge& twin( const HalfEdge& cur ) const;
@@ -402,7 +403,7 @@ public:
     // your data structure might not have failed yet.
     uint count_edge( std::size_t vFrom, std::size_t vTo ); 
 
-private:
+  private:
     std::size_t collapse_edge( std::size_t he ); // TODO REMOVE
 
     void delete_HalfEdge_impl( std::size_t he );
@@ -434,7 +435,7 @@ private:
     /* =========================================
      * Mesh Collision Tests
      * =========================================*/
-public:
+  public:
     void updateBBox();
 
     // TODO: update when mesh is changed
@@ -447,7 +448,7 @@ public:
     /*****************************************
      * Mesh Variables
      *****************************************/
-private:
+  private:
     // for mesh read and write.
     friend class MeshIO;
 	
@@ -455,6 +456,11 @@ private:
 
     // increment this value every change
     int _edit_count;
+
+    // -------------------------  Vertex Coordinates  -------------------
+
+    // Coordinate of the vertices
+    VecOfVerts _verts;
 
     // -------------------------  HalfEdge data structure ------------
 
@@ -541,21 +547,21 @@ private:
     // Priorities of who to remove -- Edge Collapse -------------------
     struct PriorityEC
     {
-        // Amount of error
-        double dv;
-        // Location of vertex to replace this edge
-        Eigen::Vector3d vbar;
-        // The Quartic matrix
-        Eigen::Matrix4d Q;
-        // Half edges associated with this edge
-        size_t he[2];
+      // Amount of error
+      double dv;
+      // Location of vertex to replace this edge
+      Eigen::Vector3d vbar;
+      // The Quartic matrix
+      Eigen::Matrix4d Q;
+      // Half edges associated with this edge
+      size_t he[2];
 
-        // Operator to sort this types to be passed as a comparing
-        // functor to the multiset.
-        bool operator() (const PriorityEC *p1, const PriorityEC *p2)
-            {
-                return p1->dv < p2->dv;
-            }
+      // Operator to sort this types to be passed as a comparing
+      // functor to the multiset.
+      bool operator() (const PriorityEC *p1, const PriorityEC *p2)
+      {
+	return p1->dv < p2->dv;
+      }
     };
     // Priority queue for edges.
     typedef std::multiset<PriorityEC*, PriorityEC> PriorityContainerEC;
@@ -572,23 +578,18 @@ private:
 
     // if a vertex is selected or not
     std::vector< bool > _is_vert_selected;
-
-    // -------------------------  Vertex Coordinates  -------------------
-
-    // Coordinate of the vertices
-    VecOfVerts _verts;
 	
-};
+  };
 
 
-inline EditMesh::EditMesh():
+  inline EditMesh::EditMesh():
     _edit_count(0),
     _n_edge_based_refinement_steps(0),
     _is_edge_map_defined(false),
     _is_simplification_in_progress(0){}
 
-inline void EditMesh::clear()
-{
+  inline void EditMesh::clear()
+  {
     _edit_count = 0;
     _n_edge_based_refinement_steps = 0;
 
@@ -601,10 +602,10 @@ inline void EditMesh::clear()
     _is_simplification_in_progress = 0;
     _he_to_edge.clear();
     _edge_to_he.clear();
-}
+  }
 
-inline void EditMesh::prepare_for_reinit()
-{
+  inline void EditMesh::prepare_for_reinit()
+  {
     _he_data.resize(0);
     _face_to_he.resize(0);
     _vert_to_he.resize(0);
@@ -614,38 +615,38 @@ inline void EditMesh::prepare_for_reinit()
     _is_simplification_in_progress = 0;
     _he_to_edge.resize(0);
     _edge_to_he.resize(0);
-}
+  }
 
-inline std::size_t EditMesh::add_vertex( double x, double y, double z )
-{
+  inline std::size_t EditMesh::add_vertex( double x, double y, double z )
+  {
     std::size_t newIndex = _verts.size();
     _verts.emplace_back( x,y,z );
     _vert_to_he.push_back( HOLE_INDEX );
     return newIndex;
-}
+  }
 
-inline Eigen::Vector3d EditMesh::get_vertex( std::size_t vertex ) const
-{
+  inline Eigen::Vector3d EditMesh::get_vertex( std::size_t vertex ) const
+  {
     return _verts[vertex];
-}
+  }
 
-inline void EditMesh::set_vertex( std::size_t i, const Eigen::Vector3d& v )
-{
+  inline void EditMesh::set_vertex( std::size_t i, const Eigen::Vector3d& v )
+  {
     _verts[i] = v;
-}
+  }
 
-inline std::size_t EditMesh::add_face( std::size_t v1, std::size_t v2, std::size_t v3 )
-{
+  inline std::size_t EditMesh::add_face( std::size_t v1, std::size_t v2, std::size_t v3 )
+  {
     std::size_t v[] = { v1, v2, v3 };
     return this->add_face( v );
-}
+  }
 
-inline bool EditMesh::init_iterator( vvert_iterator& it, std::size_t vertex ) const
-{
+  inline bool EditMesh::init_iterator( vvert_iterator& it, std::size_t vertex ) const
+  {
     std::size_t vertToHE = _vert_to_he[ vertex ];
 			
     if( vertToHE == HOLE_INDEX )
-        return false;
+      return false;
 
     // Store a pointer to the (arbitrary) first half-edge pointing
     // into the specified vertex. This implies
@@ -655,76 +656,76 @@ inline bool EditMesh::init_iterator( vvert_iterator& it, std::size_t vertex ) co
     // vertices in the 1-ring.
     it.m_cur = it.m_end = &_he_data[ _he_data[ vertToHE ].twin ];
     return true;
-}
+  }
 
-inline bool EditMesh::reset_boundary_iterator( vvert_iterator &it ) const
-{
+  inline bool EditMesh::reset_boundary_iterator( vvert_iterator &it ) const
+  {
     const HalfEdge *cur = it.m_cur;
     do
-    {
+      {
         // hooshi: second condition makes sure that we always start
         // from the boundary edge located to the right of the vertex.
         if ( (it.m_cur->face == HOLE_INDEX) &&
              (_he_data[it.m_cur->next].face == HOLE_INDEX) )
-        {
+	  {
             it.m_end = it.m_cur;
             return true;
-        }
+	  }
         it.m_cur = &_he_data[ _he_data[ it.m_cur->next ].twin ];
-    } while (cur != it.m_cur);
+      } while (cur != it.m_cur);
 
     return false;
-}
+  }
 
-inline bool EditMesh::isBoundaryFace( std::size_t i ) const
-{
+  inline bool EditMesh::isBoundaryFace( std::size_t i ) const
+  {
     std::size_t he_index = _face_to_he[i];
     const HalfEdge *he = &_he_data[ he_index ];
     while( he->next != he_index ) {
-        if( _he_data[he->twin].face == HOLE_INDEX )
-            return true;
-        he = &_he_data[ he->next ];
+      if( _he_data[he->twin].face == HOLE_INDEX )
+	return true;
+      he = &_he_data[ he->next ];
     }
     return false;
-}
+  }
 
-inline bool EditMesh::advance_iterator( vvert_iterator& it ) const
-{
+  inline bool EditMesh::advance_iterator( vvert_iterator& it ) const
+  {
     it.m_cur = &_he_data[ _he_data[ it.m_cur->next ].twin ];
     return it.m_cur != it.m_end;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator( const vvert_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator( const vvert_iterator& it ) const
+  {
     return it.m_cur->vert;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator_left_face( const vvert_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator_left_face( const vvert_iterator& it ) const
+  {
     return _he_data[it.m_cur->twin].face;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator_right_face( const vvert_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator_right_face( const vvert_iterator& it ) const
+  {
     return it.m_cur->face;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator_left_edge( const vvert_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator_left_edge( const vvert_iterator& it ) const
+  {
     return it.m_cur->twin;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator_right_edge( const vvert_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator_right_edge( const vvert_iterator& it ) const
+  {
     return _he_data[ it.m_cur->twin ].twin;
-}
+  }
 
-inline bool EditMesh::init_iterator( vface_iterator& it, std::size_t vertex ) const
-{
+  inline bool EditMesh::init_iterator( vface_iterator& it, std::size_t vertex ) const
+  {
     std::size_t vertToHE = _vert_to_he[ vertex ];
 			
     if( vertToHE == HOLE_INDEX )
-        return false;
+      return false;
 
     // Store a pointer to the (arbitrary) first half-edge pointing
     // into the specified vertex. This implies
@@ -735,21 +736,21 @@ inline bool EditMesh::init_iterator( vface_iterator& it, std::size_t vertex ) co
     it.m_cur = it.m_end = &_he_data[ _he_data[ vertToHE ].twin ];
     it.m_next = &_he_data[ _he_data[ it.m_cur->next ].twin ];
     return true;
-}
+  }
 
-inline bool EditMesh::advance_iterator( vface_iterator& it ) const
-{
+  inline bool EditMesh::advance_iterator( vface_iterator& it ) const
+  {
     it.m_cur = it.m_next;
     it.m_next = &_he_data[ _he_data[ it.m_next->next ].twin ];
     return it.m_cur != it.m_end;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator( const vface_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator( const vface_iterator& it ) const
+  {
     return it.m_cur->face;
-}
+  }
 
-inline bool EditMesh::init_iterator(fvert_iterator& it, std::size_t face ) const {
+  inline bool EditMesh::init_iterator(fvert_iterator& it, std::size_t face ) const {
     assert( face < _face_to_he.size() );
     std::size_t faceToHE = _face_to_he[ face ];
     assert( faceToHE < _he_data.size() );
@@ -762,21 +763,21 @@ inline bool EditMesh::init_iterator(fvert_iterator& it, std::size_t face ) const
     // vertices in the 1-ring.
     it.m_cur = it.m_end = &_he_data[ faceToHE ];
     return true;
-}
+  }
 
-inline bool EditMesh::advance_iterator( fvert_iterator& it ) const
-{
+  inline bool EditMesh::advance_iterator( fvert_iterator& it ) const
+  {
     it.m_cur = &_he_data[ it.m_cur->next ];
     return it.m_cur != it.m_end;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator( const fvert_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator( const fvert_iterator& it ) const
+  {
     return it.m_cur->vert;
-}
+  }
 
-inline bool EditMesh::init_iterator(fface_iterator& it, std::size_t face ) const
-{
+  inline bool EditMesh::init_iterator(fface_iterator& it, std::size_t face ) const
+  {
     assert( face < _face_to_he.size() );
     std::size_t faceToHE = _face_to_he[ face ];
     assert( faceToHE < _he_data.size() );
@@ -789,102 +790,102 @@ inline bool EditMesh::init_iterator(fface_iterator& it, std::size_t face ) const
     // vertices in the 1-ring.
     it.m_cur = it.m_end = &_he_data[ faceToHE ];
     return true;
-}
+  }
 
-inline bool EditMesh::advance_iterator( fface_iterator& it ) const
-{
+  inline bool EditMesh::advance_iterator( fface_iterator& it ) const
+  {
     it.m_cur = &_he_data[ it.m_cur->next ];
     return it.m_cur != it.m_end;
-}
+  }
 
-inline std::size_t EditMesh::deref_iterator( const fface_iterator& it ) const
-{
+  inline std::size_t EditMesh::deref_iterator( const fface_iterator& it ) const
+  {
     return _he_data[ it.m_cur->twin ].face;
-}
+  }
 
-inline const HalfEdge& EditMesh::prev( const HalfEdge& cur ) const
-{
+  inline const HalfEdge& EditMesh::prev( const HalfEdge& cur ) const
+  {
 #ifdef USE_PREV
     return _he_data[ cur.prev ];
 #else
     return _he_data[ _he_data[ cur.next ].next ];
 #endif
-}
+  }
 
-inline const HalfEdge& EditMesh::next( const HalfEdge& cur ) const
-{
+  inline const HalfEdge& EditMesh::next( const HalfEdge& cur ) const
+  {
     return _he_data[ cur.next ];
-}
+  }
 
-inline const HalfEdge& EditMesh::twin( const HalfEdge& cur ) const
-{
+  inline const HalfEdge& EditMesh::twin( const HalfEdge& cur ) const
+  {
     return _he_data[ cur.twin ];
-}
+  }
 
-inline void EditMesh::select_vert( size_t index )
-{
+  inline void EditMesh::select_vert( size_t index )
+  {
     _is_vert_selected[index] = true;
     flag_edited();
-}
+  }
 
-inline void EditMesh::deselect_vert( size_t index )
-{
+  inline void EditMesh::deselect_vert( size_t index )
+  {
     _is_vert_selected[index] = false;
     flag_edited();
-}
+  }
 
-inline void EditMesh::deselect_allVerts()
-{
+  inline void EditMesh::deselect_allVerts()
+  {
     for (size_t i = 0; i < _is_vert_selected.size(); ++i)
-    {
+      {
         _is_vert_selected[i] = false;
-    }
+      }
     flag_edited();
-}
+  }
 
-inline bool EditMesh::isSelected( size_t index )
-{
+  inline bool EditMesh::isSelected( size_t index )
+  {
     return _is_vert_selected[index];
-}
+  }
 
-inline std::size_t EditMesh::get_vert_size() const
-{
+  inline std::size_t EditMesh::get_vert_size() const
+  {
     if(_is_simplification_in_progress)
-        return _n_verts_active;
+      return _n_verts_active;
     else
-        return _vert_to_he.size();
-}
+      return _vert_to_he.size();
+  }
 
-inline std::size_t EditMesh::get_face_size() const
-{
+  inline std::size_t EditMesh::get_face_size() const
+  {
     if(_is_simplification_in_progress)
-        return _n_faces_active;
+      return _n_faces_active;
     else
-        return _face_to_he.size();
-}
+      return _face_to_he.size();
+  }
 
-inline int EditMesh::get_edit_count() const
-{
+  inline int EditMesh::get_edit_count() const
+  {
     return _edit_count;
-}
+  }
 
-inline void EditMesh::get_face_neighbors(int face_index, size_t neighbors[3])
-{
+  inline void EditMesh::get_face_neighbors(int face_index, size_t neighbors[3])
+  {
     fface_iterator fit;
     init_iterator(fit, face_index);
     int i = 0;
     do {
-        neighbors[i++] = deref_iterator(fit);
+      neighbors[i++] = deref_iterator(fit);
     } while(advance_iterator(fit));
 
     for (; i < 3; i++)
-        neighbors[i] = HOLE_INDEX;
-}
+      neighbors[i] = HOLE_INDEX;
+  }
 
-inline void EditMesh::flag_edited()
-{
+  inline void EditMesh::flag_edited()
+  {
     ++_edit_count;
-}
+  }
 
 } // End of namespace hooshi
 
