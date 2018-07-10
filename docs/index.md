@@ -19,15 +19,15 @@ metrics](https://www.ri.cmu.edu/pub_files/pub2/garland_michael_1997_1/garland_mi
 Below is an example of the Chinese dragon mesh taken from the
 aim@shape repository. The original image shown below has roughly 600,000 vertices.
 
-<img src="./simplification-dragon.png"
+<img src="./docs/simplification-dragon.png"
 width="200"/>
 
 Using the edge collapse algorithm this mesh is simplified to 8855 and
 1715 vertices, respectively, and shown in the figures below.
 
-<img src="./simplification-edge-collapse-dragon-8855.png"
+<img src="./docs/simplification-edge-collapse-dragon-8855.png"
 width="200"/>
-<img src="./simplification-edge-collapse-dragon-1715.png"
+<img src="./docs/simplification-edge-collapse-dragon-1715.png"
 width="200"/>
 
 Using the vertex decimation algorithm this mesh is simplified to 8855
@@ -36,9 +36,9 @@ vertex decimation implementation could not go beyond 3829. It is quite
 evident that the vertex decimation algorithm produces a less desirable
 result compared to that of edge collapse.
 
-<img src="./simplification-vertex-decimation-dragon-8855.png"
+<img src="./docs/simplification-vertex-decimation-dragon-8855.png"
 width="200"/>
-<img src="./simplification-vertex-decimation-dragon-3829.png"
+<img src="./docs/simplification-vertex-decimation-dragon-3829.png"
 width="200" />
 
 ## As-rigid-as-possible mesh deformation
@@ -46,11 +46,11 @@ width="200" />
 The project includes an application for interactive deformation of
 meshes using the ARAP method.
 
-<img src="./arap-1.png"
+<img src="./docs/arap-1.png"
 width="200"/>
-<img src="./arap-2.png"
+<img src="./docs/arap-2.png"
 width="200"/>
-<img src="./arap-3.png"
+<img src="./docs/arap-3.png"
 width="200"/>
 
 ## Surface remesher
@@ -59,13 +59,13 @@ This folder implementes a surface remesher from the paper [ Explicit
 surface
 remeshing](http://www.cs.technion.ac.il/%7Egotsman/AmendedPubl/SGP/SGP03.pdf).
 As an example, the remeshed models of a hand and Max Planks bust are
-shown here. There is also a [report](./dgp.pdf) and a
-[presentation](./dgp_pres.pdf).
+shown here. There is also a [report](./docs/dgp.pdf) and a
+[presentation](./docs/dgp_pres.pdf).
 
-<img src="./remesher-maxplank-before.png" width="200"/> <img
-src="./remesher-maxplank-after.png" width="200"/>
+<img src="./docs/remesher-maxplank-before.png" width="200"/> <img
+src="./docs/remesher-maxplank-after.png" width="200"/>
 
-<img src="./remesher-hand-before.png"
+<img src="./docs/remesher-hand-before.png"
 width="200"/>
-<img src="./remesher-hand-after.png"
+<img src="./docs/remesher-hand-after.png"
 width="200"/>
