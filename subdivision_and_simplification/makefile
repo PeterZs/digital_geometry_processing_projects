@@ -17,7 +17,7 @@ OBJ_OPT = $(SRC_O:%.cxx=%.o_opt)
 EXEC= $(SRC_E:%.cxx=%)
 EXEC_OPT= $(SRC_E:%.cxx=%_opt)
 
-all: $(EXEC)
+all:  exec_simplify exec_subdiv exec_cartel exec_glut
 
 # DEBUG VERSION RULES
 exec_simplify: exec_simplify.o $(OBJ)
