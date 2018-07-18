@@ -1,0 +1,172 @@
+# Specify output dimensions.
+Dimensions 1280 960
+#Dimensions 640 480
+
+# Same as gluPerspective
+Perspective 30.0 1.33 1.0 20
+
+# Same as gluLookAt
+# LookAt  1.2434  1.2533  9.8429 # eye position
+#        -0.1243 -0.1253 -0.9843 # focus position
+#        -0.0157  0.9921 -0.1243 # up vector
+
+LookAt  1.2434  3.533  12 # eye position
+       -0.1243 -0.1253 -0.9843 # focus position
+       -0.0157  0.9921 -0.1243 # up vector
+
+# A highly reflective shiny red
+Material "red"
+    "ambient"   [1.0 0.0 0.0]
+    "diffuse"   [1.0 0.0 0.0]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 500.0 # specular exponent
+    "shadow"    0.7 # shadow factor [0 = no shadow, 1= black shadow, 0..1 added to surface color]
+    "reflect"   0.8 # reflection factor [0 = no reflection, 1=full reflection, 0..1 added to surface color]
+
+# Moderately reflective shiny pink
+Material "pink"
+    "ambient"   [1.0 0.0 0.95]
+    "diffuse"   [1.0 0.0 0.95]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 80.0
+    "shadow"    0.2
+    "reflect"   0.3
+
+Material "yellow"
+    "ambient"   [1.0 0.95 0.0]
+    "diffuse"   [1.0 0.95 0.0]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 80.0
+    "shadow"    0.2
+    "reflect"   0.3
+
+Material "drag_white"
+    "ambient"   [0.3 0.3 .3]
+    "diffuse"   [0.5 0.5 0.5]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 80.0
+    "shadow"    0.2
+    "reflect"   0.3
+
+Material "pot_green"
+    "ambient"   [0.0 1.0 0.0]
+    "diffuse"   [0.0 1.0 0.0]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 80.0 # specular exponent
+    "shadow"    0.3 
+    "reflect"   0.3
+    
+# Diffuse white
+Material "white1"
+    "ambient"   [1.0 1.0 1.0]
+    "diffuse"   [1.0 1.0 1.0]
+    "specular"  [0.1 0.1 0.1]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 10.0
+    "shadow"    1
+    "reflect"   0
+
+# Somewhat shiny orange
+Material "orange"
+    "ambient"   [1.0 0.6 0.07]
+    "diffuse"   [1.0 0.6 0.07]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 100.0
+    "shadow"    0.8
+    "reflect"   0
+
+# Somewhat shiny blue.
+Material "blue"
+    "ambient"   [0.0 0.89 0.93]
+    "diffuse"   [0.0 0.89 0.93]
+    "specular"  [0.5 0.5 0.5]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 25.0
+    "shadow"    0.8
+    "reflect"   0.2
+
+# Highly diffuse white
+Material "white"
+    "ambient"   [0.1 0.1 0.1]
+    "diffuse"   [2.0 2.0 2.0]
+    "specular"  [0 0 0]
+    "emission"  [0 0 0]
+    "shininess" 0.0
+    "shadow"    1
+    "reflect"   0.5
+
+
+###############################################################################
+## objects
+##
+## Dragon mesh
+
+
+PushMatrix
+    Translate 0.5 0 0
+    Scale 5 5 5
+    Rotate 90 0 1 0
+    Mesh "drag_white" "meshes/Dragon.obj"
+PopMatrix
+
+# Floor
+PushMatrix
+    Translate 0 -1.25 0
+    Rotate -90 1 0 0
+    Plane "white"
+PopMatrix
+
+# tea pot
+PushMatrix
+    Translate 0.5 -1.25 2.3
+    Scale 0.3 0.3 0.3
+    Rotate -10 0 1 0
+    Mesh "pot_green" "meshes/teapot.obj"
+PopMatrix
+
+PushMatrix
+    Translate -1.8 0 1.4 
+    Scale 2 2 2
+    Rotate -40 0 1 0
+    Mesh "blue" "meshes/cow1.obj"
+PopMatrix
+
+PushMatrix
+    Translate 2.5 1 -2.5
+    Rotate -40 0 1 0	
+    Scale 1.0 1.0 0.2
+    Sphere 2 "red" 
+PopMatrix
+
+PushMatrix
+    Translate -2.5 1.4 -3.5
+    Scale 1.5 1.5 1.5
+    Rotate -30 0 1 0
+    Mesh "yellow" "meshes/icosahedron.obj"
+PopMatrix
+
+
+############################################################################### 
+## define lights
+##
+## define a point light source
+
+PointLight      2.0 10.0 3.0    # position [x y z]
+    "ambient"  [0.1 0.1 0.1]    # ambient color [r g b]
+    "diffuse"  [10.0 10.0 10.0] # diffuse color 
+    "specular" [20.0 20.0 20.0] # specular color
+    "attenuation"  [1.8 3.0 0.0]    # attenuation [constant linear square]
+
+# define another light source
+PointLight 2.0 5.0 -2.0         # position [x y z]
+   "ambient"  [0.1 0.1 0.1]    # ambient color [r g b]
+   "diffuse"  [5.0 5.0 5.0]    # diffuse color 
+   "specular" [20.0 20.0 20.0] # specular color
+   "attenuation"  [1.8 3.0 0.0]    # attenuation [constant linear square]
+

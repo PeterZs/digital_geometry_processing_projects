@@ -1,0 +1,73 @@
+
+
+# Specify output dimensions.
+Dimensions 640 480
+
+# Same as gluPerspective
+Perspective 30.0 1.33 1.0 20
+
+# Same as gluLookAt
+LookAt  1.2434  1.2533  9.8429 # eye position
+       -0.1243 -0.1253 -0.9843 # focus position
+       -0.0157  0.9921 -0.1243 # up vector
+
+# Yellow material.
+Material "yellow"
+    "ambient"   [1.0 1.0 0.0]
+    "diffuse"   [1.0 1.0 0.0]
+    "specular"  [1.0 1.0 1.0]
+    "emission"  [0.0 0.0 0.0]
+    "shininess" 50.0 # specular exponent
+    "shadow"    0.8 # shadow factor [0 = no shadow, 1= black shadow, 0..1 added to surface color]
+    "reflect"   0.1 # reflection factor [0 = no reflection, 1=full reflection, 0..1 added to surface color]
+
+# White material.
+Material "white"
+    "ambient"   [0.1 0.1 0.1]
+    "diffuse"   [2.0 2.0 2.0]
+    "specular"  [0 0 0]
+    "emission"  [0 0 0]
+    "shininess" 0.0
+    "shadow"    0.8
+    "reflect"   0.0
+
+
+###############################################################################
+## objects
+##
+## Icosahedron mesh
+
+
+PushMatrix
+    Rotate 90 0 1 0
+    Mesh "yellow" "meshes/icosahedron.obj"
+PopMatrix
+
+# Floor
+PushMatrix
+    Translate 0 -2 0
+    Rotate -90 1 0 0
+    Plane "white"
+PopMatrix
+
+
+############################################################################### 
+## define lights
+##
+## define a point light source
+
+#PointLight      2.0 10.0 3.0    # position [x y z]
+PointLight      0.0 0.0 10.0
+    "ambient"  [0.1 0.1 0.1]    # ambient color [r g b]
+    "diffuse"  [10.0 10.0 10.0] # diffuse color 
+    "specular" [20.0 20.0 20.0] # specular color
+    "attenuation"  [1.8 3.0 0.0]    # attenuation [constant linear square]
+
+# define another light source
+PointLight 2.0 5.0 -2.0         # position [x y z]
+    "ambient"  [0.1 0.1 0.1]    # ambient color [r g b]
+    "diffuse"  [5.0 5.0 5.0]    # diffuse color 
+    "specular" [20.0 20.0 20.0] # specular color
+    "attenuation"  [1.8 3.0 0.0]    # attenuation [constant linear square]
+
+

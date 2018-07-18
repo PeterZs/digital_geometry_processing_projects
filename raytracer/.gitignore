@@ -1,0 +1,8 @@
+*~
+*.o_opt
+*.o_dbg
+scenes/*.bmp
+.cproject
+.project
+.settings/
+*.vtk

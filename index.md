@@ -69,3 +69,66 @@ src="./docs/remesher-maxplank-after.png" width="200"/>
 width="200"/>
 <img src="./docs/remesher-hand-after.png"
 width="200"/>
+
+## A Basic Ray Tracer Boosted with K-D Trees
+
+
+```
+make METHOD=opt -> optimized build
+make METHOD=dbg -> debug build
+
+./raytracer[.opt]
+```
+
+By default, this will render a scene with only a red cube and save the
+resulting image as output.bmp.
+
+To run the executable and render a different scene, pass it as the
+first argument:
+
+```
+./bin/raytracer[.opt] your_scene_file_path
+```
+
+Here is an example (approximate run time 5 minutes).
+
+```
+./bin/raytracer.opt scenes/dragon.obj
+
+Rendering scenes/dragon.ray
+Output to scenes/dragon_out.bmp
+got OBJ filename "meshes/Dragon.obj"
+Mesh: 50000 triangles
+Normals are already defined! But still doing flat shading.
+got OBJ filename "meshes/teapot.obj"
+Mesh: 6320 triangles
+got OBJ filename "meshes/cow1.obj"
+Mesh: 5804 triangles
+got OBJ filename "meshes/icosahedron.obj"
+Mesh: 20 triangles
+Near: 1
+Far: 20
+Height: 0.535898
+Width: 0.712745
+Ray centered at: 1.2434 3.533 12 0
+Corner1: 0.779874 3.52031 11.0081 0
+Corner2: 1.48864 3.5221 10.933 0
+Corner3: 1.50519 3.00608 11.0766 0
+Corner4: 0.796417 3.00428 11.1518 0
+Row 0 pixels done.
+Row 100 pixels done.
+Row 200 pixels done.
+Row 300 pixels done.
+Row 400 pixels done.
+Row 500 pixels done.
+Row 600 pixels done.
+Row 700 pixels done.
+Row 800 pixels done.
+Row 900 pixels done.
+Ray tracing terminated and images are saved.
+```
+<img src="./docs/dragon_out.bmp"
+width="600"/>
+
+<img src="./demo/dragon_depth_out.bmp"
+width="600"/>
