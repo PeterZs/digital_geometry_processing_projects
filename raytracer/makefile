@@ -107,4 +107,6 @@ depend:
 	$(foreach srcfile, ${SRCFILES}, ${DEPEND} ${CFLAGS} -MM ${srcfile} -MT $(patsubst %.cpp, ${BUILD}%.o_${EXT}, $(notdir ${srcfile})) >> ${BUILD}Makefile.depend_${EXT};)
 
 
--include ${BUILD}Makefile.depend_${EXT}
+# variables cannot be used here.
+-include build/Makefile.depend_opt
+-include build/Makefile.depend_dbg
