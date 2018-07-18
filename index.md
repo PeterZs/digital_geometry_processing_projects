@@ -128,7 +128,7 @@ Row 900 pixels done.
 Ray tracing terminated and images are saved.
 ```
 <img src="./docs/dragon_out.bmp"
-width="600"/>
+width="400"/>
 
-<img src="./demo/dragon_depth_out.bmp"
-width="600"/>
+<img src="./docs/dragon_depth_out.bmp"
+width="400"/>
